@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TODO App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background: #d4e7c5;
+            padding: 20px;
+            border-radius: 10px;
+            width: 320px;
+            text-align: center;
+        }
+        .task {
+            background: #e5f4d5;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .task button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        .task-container {
+            margin-top: 20px;
+        }
+        .add-task-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #b0d186;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        .add-task-btn span {
+            margin-left: 5px;
+        }
+        .task-entry {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .task-entry input {
+            width: 100%;
+            margin-bottom: 8px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .create-task-btn {
+            background: #4CAF50;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>TODO App</h2>
+        <button class="add-task-btn" onclick="togtskent()">➕ <span>Add New Task</span></button>
+        <div class="task-entry" id="taskEntry">
+            <input type="text" id="taskTitle" placeholder="Task Title">
+            <input type="date" id="taskDate">
+            <input type="text" id="taskDescription" placeholder="Task Description">
+            <button class="create-task-btn" onclick="creatsk()">Create Task</button>
+        </div>
+
+        <div class="task-container" id="tskcntain"></div>
+    </div>
+    <script>
+        function togtskent() {
+            let taskEntry = document.getElementById("taskEntry");
+            taskEntry.style.display = taskEntry.style.display === "none" ? "block" : "none";
+        }
+        function creatsk() {
+            let titl = document.getElementById('taskTitle').value;
+            let dat = document.getElementById('taskDate').value;
+            let desc = document.getElementById('taskDescription').value;
+            if (titl === '' || dat === '' || desc === '') {
+                alert("Please fill all fields!");
+                return;
+            }
+            let tskcntain = document.getElementById('tskcntain');
+            let tskdiv = document.createElement('div');
+            tskdiv.classList.add('task');
+            let titlelt = document.createElement('p');
+            titlelt.textContent = titl;
+            titlelt.style.fontWeight = "bold";
+            let datelt = document.createElement('p');
+            datelt.textContent = dat;
+            let descelt = document.createElement('p');
+            descelt.textContent = desc; 
+            let edtbton = document.createElement('button');
+            edtbton.textContent = '✏️';
+            edtbton.onclick = function() { edtask(titlelt, datelt, descelt); };
+            let delbton = document.createElement('button');
+            delbton.textContent = '🗑️';
+            delbton.onclick = function() { deltsk(tskdiv); };
+            tskdiv.appendChild(titlelt);
+            tskdiv.appendChild(datelt);
+            tskdiv.appendChild(descelt);
+            tskdiv.appendChild(edtbton);
+            tskdiv.appendChild(delbton);
+            tskcntain.appendChild(tskdiv);
+            document.getElementById('taskTitle').value = '';
+            document.getElementById('taskDate').value = '';
+            document.getElementById('taskDescription').value = '';
+            document.getElementById("taskEntry").style.display = "none";
+        }
+
+        function deltsk(tskelt) {
+            tskelt.remove();
+        }
+        
+        function edtask(titlelt, datelt, descelt) {
+            let titl = prompt("Edit Title", titlelt.textContent);
+            let dat = prompt("Edit Date", datelt.textContent);
+            let desc = prompt("Edit Description", descelt.textContent);
+            
+            if (titl && dat && desc) {
+                titlelt.textContent = titl;
+                datelt.textContent = dat;
+                descelt.textContent = desc;
+            }
+        }
+        document.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                creatsk();
+            }
+        });
+    </script>
+</body>
+</html>
